@@ -7,12 +7,23 @@
   </head>
   <body>
     <h1>Lap Data</h1>
+    <p>
+      Use the URL query `?bib=XXX` to fetch lap data for a specific bib number.
+    </p>
     <pre id="output">Fetching data...</pre>
 
     <script>
-      // URL to fetch the lap data
-      const url =
-        "https://korido.hu/events/resultTableLaps.php?rc=1700&bib=977";
+      // Function to get query parameters from URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // Get the bib number from the URL query string
+      const bibNumber = getQueryParam("bib") || "977"; // Default to bib 977 if none is provided
+
+      // URL to fetch the lap data with the bib number
+      const url = `https://korido.hu/events/resultTableLaps.php?rc=1700&bib=${bibNumber}`;
 
       fetch(url)
         .then((response) => response.text())
